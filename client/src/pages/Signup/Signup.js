@@ -3,6 +3,10 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { signUp } from "../../redux/action-creators";
+import './Signup.module.scss';
+import styles from "../Signin/Signin.module.scss";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye, faKey, faUser, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 
 const Signup = () => {
 	const dispatch = useDispatch();
@@ -25,31 +29,47 @@ const Signup = () => {
 	};
 
 	return (
-		<div>
-			<div>
-				<input
-					type="text"
-					placeholder="email"
-					value={email}
-					onChange={handleEmailChange}
-				/>
-				<input
-					type="password"
-					placeholder="password"
-					value={password}
-					onChange={handlePasswordChange}
-				/>
-				{error !== null ? <div className="error">{error}</div> : null}
-				<button
-					onClick={handleSignUpClick}
-				>
-					SignUP
-				</button>
-				<h5>
-					<Link to="/signin">Already have an account?</Link>
-				</h5>
+	<div className="overlay">
+		<form>
+			<div className="con">
+				<header>
+					<h2>Sign Up</h2>
+					<p>Create a new account here</p>
+				</header>
+				<div className={styles.inputGroup}>
+					<FontAwesomeIcon icon={faUser} className={styles.icons} />
+					<input
+						className="form-input"
+						type="text"
+						placeholder="@Email"
+						required
+						value={email}
+						onChange={handleEmailChange}
+					/>
+					<br />
+					<FontAwesomeIcon icon={faKey} className={styles.icons}/>
+					<input
+						className="form-input"
+						type="password"
+						placeholder="Password"
+						name="password"
+						required
+						value={password}
+						onChange={handlePasswordChange}
+					/>
+					<FontAwesomeIcon icon={faEye} className={styles.icons} />
+					{error !== null ? <div>{error}</div> : null}
+					<button onClick={handleSignUpClick} className={styles.loginBtn}>Create an account</button>
+				</div>
+				<div className={styles.signupSection}>
+					<Link to="/" className={styles.linkToSignup}>
+						Already have an account
+					</Link>
+					<FontAwesomeIcon icon={faUserPlus} />
+				</div>
 			</div>
-		</div>
+		</form>
+	</div>
 	);
 };
 
