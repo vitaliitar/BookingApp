@@ -2,10 +2,10 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import "./App.css";
-import Navbar from "./components/Navbar";
-import SignIn from "./pages/Signin";
-import SignUp from "./pages/Signup";
-import Home from "./pages/Home"
+import Navbar from "./components/Navbar/Navbar";
+import SignIn from "./pages/Signin/Signin";
+import SignUp from "./pages/Signup/Signup";
+import Home from "./pages/Home/Home"
 import { PrivateRoute } from "./components/PrivateRoute"
 
 const App = () => {

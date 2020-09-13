@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { signIn } from "../redux/action-creators";
+import { signIn } from "../../redux/action-creators";
 
 const Signin = () => {
 	const dispatch = useDispatch();
@@ -25,8 +25,8 @@ const Signin = () => {
 	};
 
 	return (
-		<div className="mycard">
-			<div className="card auth-card input-field">
+		<div>
+			<div>
 				<input
 					type="text"
 					placeholder="email"
@@ -39,9 +39,8 @@ const Signin = () => {
 					value={password}
 					onChange={handlePasswordChange}
 				/>
-				{error !== null ? <div className="error">{error}</div> : null}
+				{error !== null ? <div>{error}</div> : null}
 				<button
-					className="btn waves-effect waves-light #42a5f5 blue lighten-1"
 					onClick={handleSignInClick}
 				>
 					Login
