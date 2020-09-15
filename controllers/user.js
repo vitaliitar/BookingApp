@@ -7,11 +7,13 @@ module.exports = {
 			const savedUser = await UserServices.createUser(newUser);
 
 			res.status(200).json({
-				success: true,
 				data: savedUser,
 			});
 		} catch (error) {
 			console.log(error);
+			res.status(500).json({
+				error: error.message
+			})
 		}
 	},
 	signIn: async (req, res, next) => {
@@ -19,11 +21,13 @@ module.exports = {
 			const payload = req.body;
 			const token = await UserServices.signInUser(payload);
 			res.status(200).json({
-				success: true,
 				token: token,
 			});
 		} catch (error) {
 			console.log(error);
+			res.status(500).json({
+				error: error.message
+			})
 		}
 	}
 }

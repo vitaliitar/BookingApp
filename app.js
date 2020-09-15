@@ -1,15 +1,10 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
-const passport = require("passport");
-const passportLocal = require("passport-local").Strategy;
-const cookieParser = require("cookie-parser");
-const bcrypt = require("bcryptjs");
-const session = require("express-session");
 const bodyParser = require("body-parser");
 const app = express();
-const User = require("./models/User");
-const authRouter = require("./routes/auth")
+const authRouter = require("./routes/auth");
+const apartmentRouter = require('./routes/apartment');
 
 
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
@@ -18,11 +13,9 @@ mongoose.connect(
 	{
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
+		useFindAndModify: true
 	},
-	() => {
-		console.log("Mongoose Is Connected");
-	}
-);
+).then(() => console.log("Mongoose Is Connected"));
 
 // Middleware
 app.use(bodyParser.json());
@@ -33,23 +26,13 @@ app.use(
 		credentials: true,
 	})
 );
-// app.use(
-// 	session({
-// 		secret: "secretcode",
-// 		resave: true,
-// 		saveUninitialized: true,
-// 	})
-// );
-// app.use(cookieParser("secretcode"));
-// app.use(passport.initialize());
-// app.use(passport.session());
-// require("./passportConfig")(passport);
 
 //----------------------------------------- END OF MIDDLEWARE---------------------------------------------------
 
 
 app.use(express.json());
 app.use("/", authRouter);
+app.use("/", apartmentRouter);
 
 app.listen(4000, () => {
 	console.log(`Server started on 4000`);
