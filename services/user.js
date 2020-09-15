@@ -1,7 +1,6 @@
 const bcrypt = require("bcryptjs");
 
 const User = require('../models/User')
-// import getSignedToken from "../util/signedToken";
 const getSignedToken = require('../utils/signedToken')
 
 module.exports = {
