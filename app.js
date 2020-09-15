@@ -5,11 +5,12 @@ const bodyParser = require("body-parser");
 const app = express();
 const authRouter = require("./routes/auth");
 const apartmentRouter = require('./routes/apartment');
+require('dotenv').config()
 
 
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 mongoose.connect(
-	"mongodb://localhost:27017/BookingAppDevelopment",
+	process.env.MONGO_URI,
 	{
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
@@ -34,6 +35,6 @@ app.use(express.json());
 app.use("/", authRouter);
 app.use("/", apartmentRouter);
 
-app.listen(4000, () => {
+app.listen(process.env.PORT, () => {
 	console.log(`Server started on 4000`);
 });
