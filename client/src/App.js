@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
@@ -7,14 +7,19 @@ import SignIn from "./pages/Signin/Signin";
 import SignUp from "./pages/Signup/Signup";
 import Home from "./pages/Home/Home"
 import { PrivateRoute } from "./components/PrivateRoute"
+import ValidatedLoginForm from "./components/ValidatedLoginForm";
 
 const App = () => {
 
   return (
     <Router>
       <Navbar />
+      <Switch>
       <Route path="/signup" exact>
         <SignUp />
+      </Route>
+      <Route path="/smth" exact>
+        <ValidatedLoginForm/>
       </Route>
       <Route path="/" exact>
         <SignIn />
@@ -22,6 +27,7 @@ const App = () => {
       <PrivateRoute path="/home">
         <Home />
       </PrivateRoute>
+      </Switch>
     </Router>
   );
 }

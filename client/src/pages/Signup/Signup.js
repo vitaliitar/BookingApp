@@ -40,7 +40,7 @@ const Signup = () => {
 					<FontAwesomeIcon icon={faUser} className={styles.icons} />
 					<input
 						className="form-input"
-						type="text"
+						type="email"
 						placeholder="@Email"
 						required
 						value={email}

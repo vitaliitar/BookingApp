@@ -3,6 +3,9 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { faEye, faKey, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useFormik } from "formik";
+import * as EmailValidator from "email-validator";
+import * as Yup from "yup";
 
 import { signIn } from '../../redux/action-creators';
 import styles from "./Signin.module.scss"
@@ -13,24 +16,34 @@ const Signin = () => {
   const history = useHistory();
   const { error } = useSelector((state) => state.authentication);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleSignInClick = (event) => {
-    event.preventDefault();
-    dispatch(signIn({ email, password }, history));
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Invalid email format")
+        .required("Required!"),
+      password: Yup.string()
+        .min(3, "Invalid email or password")
+        .required("Required!"),
+    }),
+    onSubmit: values => {
+      alert(JSON.stringify(values, null, 2));
+    }
+  });
+  const handleSignInClick = (email, password) => {
+    dispatch(signIn({ email, password }, history))
+    if (error) {
+      // TODO Toaster with errors
+    }
   };
 
   return (
     <div className="overlay">
-      <form>
+      <form onSubmit={formik.handleSubmit}>
         <div className="con">
           <header>
             <h2>Log In</h2>
@@ -40,12 +53,15 @@ const Signin = () => {
 						<FontAwesomeIcon icon={faUser} className={styles.icons} />
             <input
               className="form-input"
-              type="text"
+              type="email"
               placeholder="@Email"
-              required
-              value={email}
-              onChange={handleEmailChange}
+              name="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
             />
+            {formik.errors.email && formik.touched.email && (
+              <p>{formik.errors.email}</p>
+            )}
             <br />
             <FontAwesomeIcon icon={faKey} className={styles.icons}/>
             <input
@@ -53,13 +69,11 @@ const Signin = () => {
               type="password"
               placeholder="Password"
               name="password"
-              required
-              value={password}
-              onChange={handlePasswordChange}
+              value={formik.values.password}
+              onChange={formik.handleChange}
             />
             <FontAwesomeIcon icon={faEye} className={styles.icons} />
-						{error !== null ? <div>{error}</div> : null}
-						<button onClick={handleSignInClick} className={styles.loginBtn}>Login</button>
+						<button onClick={() => handleSignInClick(formik.values.email, formik.values.password)} className={styles.loginBtn}>Login</button>
           </div>
           <div className={styles.signupSection}>
             <Link to="/signup" className={styles.linkToSignup}>
