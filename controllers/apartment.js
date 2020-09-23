@@ -17,7 +17,7 @@ module.exports = {
 				data: savedApartment
 			})
 		} catch (error) {
-			res.status(500).json({
+			res.status(400).json({
 				error: error.message
 			})
 		}
@@ -32,7 +32,7 @@ module.exports = {
 			})
 
 		} catch (error) {
-			res.status(500).json({
+			res.status(400).json({
 				error: error.message
 			})
 		}
@@ -46,7 +46,7 @@ module.exports = {
 				data: "Deleted successfully"
 			})
 		} catch (error) {
-			res.status(500).json({
+			res.status(400).json({
 				error: error.message
 			})
 		}

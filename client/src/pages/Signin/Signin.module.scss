@@ -3,8 +3,6 @@
 /* End Fonts */
 /* Start Global rules */
 * {
-  //padding: 0;
-  //margin: 0;
   box-sizing: border-box;
 }
 /* End Global rules */
@@ -15,7 +13,7 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat;
 
-  font-family: 'Abel', sans-serif;
+  font-family: 'Roboto', sans-serif;
   opacity: .95;
 }
 
@@ -81,28 +79,6 @@ input:focus {
   border-radius: 5px;
 }
 
-/* buttons  */
-button {
-  color: #252537;
-
-  width: 280px;
-  height: 50px;
-
-  background: #fff;
-  border-radius: 5px;
-
-  outline: none;
-  border: none;
-
-  cursor: pointer;
-  transition: all 0.2s linear;
-
-  margin: 5% auto;
-  letter-spacing: 0.05em;
-}
-
-/*     Sign Up button  */
-.sign-up {background: #B8F2E6;}
 
 
 /* buttons hover */
@@ -135,6 +111,23 @@ button:hover {
 }
 .loginBtn {
   margin-left: 8%;
+  color: #252537;
+
+  width: 280px;
+  height: 50px;
+
+  background: #fff;
+  border-radius: 5px;
+
+  outline: none;
+  border: none;
+
+  cursor: pointer;
+  transition: all 0.2s linear;
+
+  margin-top: 5%;
+  margin-bottom: 5%;
+  letter-spacing: 0.05em;
 }
 
 .icons {

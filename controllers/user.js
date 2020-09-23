@@ -10,8 +10,7 @@ module.exports = {
 				data: savedUser,
 			});
 		} catch (error) {
-			console.log(error);
-			res.status(500).json({
+			res.status(400).json({
 				error: error.message
 			})
 		}
@@ -24,8 +23,7 @@ module.exports = {
 				token: token,
 			});
 		} catch (error) {
-			console.log(error);
-			res.status(500).json({
+			res.status(400).json({
 				error: error.message
 			})
 		}
