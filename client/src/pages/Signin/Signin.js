@@ -28,11 +28,15 @@ const Signin = () => {
       email: Yup.string().email('Invalid email format').required('Required!'),
       password: Yup.string().min(3, 'Invalid email or password').required('Required!'),
     }),
+    onSubmit: values => {
+      // TODO
+      // alert(JSON.stringify(values, null, 2));
+    }
   });
 
   useEffect(() => {
     if (error) {
-      handleErrorNotify();
+      handleErrorNotify("Please enter correct data");
     }
     dispatch(clearAuthError());
   }, [error]);
@@ -70,7 +74,7 @@ const Signin = () => {
               value={formik.values.email}
               onChange={formik.handleChange}
             />
-            {formik.errors.email && formik.touched.email && <p>{formik.errors.email}</p>}
+            {formik.errors.email && formik.touched.email && <p className={styles.error}>{formik.errors.email}</p>}
             <br />
             <FontAwesomeIcon icon={faKey} className={styles.icons} />
             <input
