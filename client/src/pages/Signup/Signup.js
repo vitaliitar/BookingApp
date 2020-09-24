@@ -1,35 +1,61 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { signUp } from "../../redux/action-creators";
+import {clearAuthError, signUp} from "../../redux/action-creators/auth";
 import './Signup.module.scss';
 import styles from "../Signin/Signin.module.scss";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faKey, faUser, faUserPlus} from "@fortawesome/free-solid-svg-icons";
+import {useFormik} from "formik";
+import * as Yup from "yup";
+import {ToastContainer} from "react-toastify";
+import {handleErrorNotify} from "../../utils/error";
 
 const Signup = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { error } = useSelector((state) => state.authentication);
 
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const formik = useFormik({
+		initialValues: {
+			email: '',
+			password: '',
+			confirm_password: ''
+		},
+		validationSchema: Yup.object({
+			email: Yup.string().email('Invalid email format').required('Required!'),
+			password: Yup.string().min(3, 'Invalid email or password').required('Required!'),
+			confirm_password: Yup.string()
+				.oneOf([Yup.ref("password")], "Password's not match")
+				.required("Required!")
+		}),
+	});
 
-	const handleEmailChange = (event) => {
-		setEmail(event.target.value);
-	};
-	const handlePasswordChange = (event) => {
-		setPassword(event.target.value);
-	};
-
-	const handleSignUpClick = (event) => {
-		event.preventDefault();
+	const handleSignUpClick = (email, password) => {
 		dispatch(signUp({ email, password }, history));
 	};
 
+	useEffect(() => {
+		if (error) {
+			handleErrorNotify();
+		}
+		dispatch(clearAuthError());
+	}, [error]);
+
 	return (
 	<div className="overlay">
+		<ToastContainer
+			position="top-right"
+			autoClose={5000}
+			hideProgressBar={false}
+			newestOnTop={false}
+			closeOnClick
+			rtl={false}
+			pauseOnFocusLoss
+			draggable
+			pauseOnHover
+		/>
 		<form>
 			<div className="con">
 				<header>
@@ -42,9 +68,9 @@ const Signup = () => {
 						className="form-input"
 						type="email"
 						placeholder="@Email"
-						required
-						value={email}
-						onChange={handleEmailChange}
+						name="email"
+						value={formik.values.email}
+						onChange={formik.handleChange}
 					/>
 					<br />
 					<FontAwesomeIcon icon={faKey} className={styles.icons}/>
@@ -53,13 +79,22 @@ const Signup = () => {
 						type="password"
 						placeholder="Password"
 						name="password"
-						required
-						value={password}
-						onChange={handlePasswordChange}
+						value={formik.values.password}
+						onChange={formik.handleChange}
 					/>
-					<FontAwesomeIcon icon={faEye} className={styles.icons} />
-					{error !== null ? <div>{error}</div> : null}
-					<button onClick={handleSignUpClick} className={styles.loginBtn}>Create an account</button>
+					<br/>
+					<FontAwesomeIcon icon={faKey} className={styles.icons}/>
+					<input
+						className="form-input"
+						type="password"
+						name="confirm_password"
+						placeholder="Confirmation"
+						value={formik.values.confirm_password}
+						onChange={formik.handleChange}
+					/>
+					{formik.errors.confirm_password && formik.touched.confirm_password && (
+						<p>{formik.errors.confirm_password}</p>)}
+					<button onClick={() => handleSignUpClick(formik.values.email, formik.values.password)} className={styles.loginBtn}>Create an account</button>
 				</div>
 				<div className={styles.signupSection}>
 					<Link to="/" className={styles.linkToSignup}>

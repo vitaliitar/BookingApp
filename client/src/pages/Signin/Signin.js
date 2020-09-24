@@ -8,9 +8,10 @@ import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { signIn } from '../../redux/action-creators';
+import {clearAuthError, signIn} from '../../redux/action-creators/auth';
 import styles from './Signin.module.scss';
 import './Signin.module.scss';
+import {handleErrorNotify} from "../../utils/error";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -29,14 +30,11 @@ const Signin = () => {
     }),
   });
 
-  const handleErrorNotify = () => {
-    toast.error('Please enter correct data', {
-      position: toast.POSITION.TOP_RIGHT
-    });
-  };
-
   useEffect(() => {
-    if (error) handleErrorNotify();
+    if (error) {
+      handleErrorNotify();
+    }
+    dispatch(clearAuthError());
   }, [error]);
 
   const handleSignInClick = (email, password) => {

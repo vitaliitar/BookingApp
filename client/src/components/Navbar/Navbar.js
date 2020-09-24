@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { signOut } from "../../redux/action-creators";
+import { signOut } from "../../redux/action-creators/auth";
 import styles from './Navbar.module.scss';
 
 const Navbar = () => {

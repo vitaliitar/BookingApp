@@ -9,8 +9,8 @@ import {
 	SIGN_UP_SUCCESS,
 	SIGN_OUT_FAILURE,
 	SIGN_OUT_REQUEST,
-	SIGN_OUT_SUCCESS,
-} from "./action-types";
+	SIGN_OUT_SUCCESS, CLEAR_AUTH_ERROR,
+} from "../action-types/auth";
 
 export const isValidToken = (token) => {
 	let decoded = jwt.decode(token);
@@ -66,6 +66,11 @@ const authenticationReducer = function (state = initState, action) {
 				currentUser: null,
 				token: "",
 			};
+		case CLEAR_AUTH_ERROR:
+			return {
+				...state,
+				error: ""
+			}
 		default:
 			return { ...state };
 	}
