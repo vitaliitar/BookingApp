@@ -1,17 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { faEye, faKey, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEye, faKey, faUser, faUserPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import {clearAuthError, signIn} from '../../redux/action-creators/auth';
+import { clearAuthError, signIn } from '../../redux/action-creators/auth';
 import styles from './Signin.module.scss';
-import './Signin.module.scss';
-import {handleErrorNotify} from "../../utils/error";
+
+import { handleErrorNotify } from '../../utils/error';
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -28,15 +30,15 @@ const Signin = () => {
       email: Yup.string().email('Invalid email format').required('Required!'),
       password: Yup.string().min(3, 'Invalid email or password').required('Required!'),
     }),
-    onSubmit: values => {
+    onSubmit: (values) => {
       // TODO
       // alert(JSON.stringify(values, null, 2));
-    }
+    },
   });
 
   useEffect(() => {
     if (error) {
-      handleErrorNotify("Please enter correct data");
+      handleErrorNotify('Please enter correct data');
     }
     dispatch(clearAuthError());
   }, [error]);
@@ -79,13 +81,13 @@ const Signin = () => {
             <FontAwesomeIcon icon={faKey} className={styles.icons} />
             <input
               className="form-input"
-              type={(showPassword) ? "text" : "password"}
+              type={(showPassword) ? 'text' : 'password'}
               placeholder="Password"
               name="password"
               value={formik.values.password}
               onChange={formik.handleChange}
             />
-            <FontAwesomeIcon icon={faEye} className={styles.icons} onClick={() => setShowPassword(!showPassword)}/>
+            <FontAwesomeIcon icon={faEye} className={styles.icons} onClick={() => setShowPassword(!showPassword)} />
             <button
               onClick={() => handleSignInClick(formik.values.email, formik.values.password)}
               className={styles.loginBtn}

@@ -1,7 +1,7 @@
-import {toast} from "react-toastify";
+import { toast } from 'react-toastify';
 
 export const handleErrorNotify = (message) => {
-	toast.error(message, {
-		position: toast.POSITION.TOP_RIGHT
-	});
+  toast.error(message, {
+    position: toast.POSITION.TOP_RIGHT,
+  });
 };

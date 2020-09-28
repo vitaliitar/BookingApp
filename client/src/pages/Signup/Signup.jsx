@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { clearAuthError, signUp } from '../../redux/action-creators/auth';
 import './Signup.module.scss';
-import styles from '../Signin/Signin.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faKey, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEye, faKey, faUser, faUserPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ToastContainer } from 'react-toastify';
+import styles from '../Signin/Signin.module.scss';
+import { clearAuthError, signUp } from '../../redux/action-creators/auth';
 import { handleErrorNotify } from '../../utils/error';
 
 const Signup = () => {
@@ -100,13 +102,11 @@ const Signup = () => {
               onChange={formik.handleChange}
             />
             <button
-              onClick={() =>
-                handleSignUpClick(
-                  formik.values.email,
-                  formik.values.password,
-                  formik.values.confirm_password,
-                )
-              }
+              onClick={() => handleSignUpClick(
+                formik.values.email,
+                formik.values.password,
+                formik.values.confirm_password,
+              )}
               className={styles.loginBtn}
             >
               Create an account

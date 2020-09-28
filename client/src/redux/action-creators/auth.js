@@ -13,98 +13,80 @@ import {
   CLEAR_AUTH_ERROR,
 } from '../action-types/auth';
 
-export const clearAuthError = () => {
-  return {
-    type: CLEAR_AUTH_ERROR,
-  };
-};
+export const clearAuthError = () => ({
+  type: CLEAR_AUTH_ERROR,
+});
 
-//Sign up action creators
-const signUpRequest = () => {
-  return {
-    type: SIGN_UP_REQUEST,
-  };
-};
-const signUpSuccess = (user) => {
-  return {
-    type: SIGN_UP_SUCCESS,
-    payload: {
-      user,
-    },
-  };
-};
-const signUpFailure = (error) => {
-  return {
-    type: SIGN_UP_FAILURE,
-    payload: error,
-  };
-};
+// Sign up action creators
+const signUpRequest = () => ({
+  type: SIGN_UP_REQUEST,
+});
+const signUpSuccess = (user) => ({
+  type: SIGN_UP_SUCCESS,
+  payload: {
+    user,
+  },
+});
+const signUpFailure = (error) => ({
+  type: SIGN_UP_FAILURE,
+  payload: error,
+});
 
-export const signUp = (user, history) => {
-  return function (dispatch) {
-    dispatch(signUpRequest());
-    axios({
-      method: 'post',
-      url: '/signup',
-      data: user,
+export const signUp = (user, history) => function (dispatch) {
+  dispatch(signUpRequest());
+  axios({
+    method: 'post',
+    url: '/signup',
+    data: user,
+  })
+    .then((response) => {
+      const { data } = response.data;
+      dispatch(signUpSuccess(data));
+      history.push('/');
     })
-      .then((response) => {
-        const { data } = response.data;
-        dispatch(signUpSuccess(data));
-        history.push('/');
-      })
-      .catch((error) => {
-        console.log(error);
-        dispatch(signUpFailure(error));
-      });
-  };
+    .catch((error) => {
+      console.log(error);
+      dispatch(signUpFailure(error));
+    });
 };
 
-//Sign in action creators
-const signInRequest = () => {
-  return {
-    type: SIGN_IN_REQUEST,
-  };
-};
-const signInSuccess = (token) => {
-  return {
-    type: SIGN_IN_SUCCESS,
-    payload: {
-      token,
+// Sign in action creators
+const signInRequest = () => ({
+  type: SIGN_IN_REQUEST,
+});
+const signInSuccess = (token) => ({
+  type: SIGN_IN_SUCCESS,
+  payload: {
+    token,
+  },
+});
+const signInFailure = (error) => ({
+  type: SIGN_IN_FAILURE,
+  payload: error,
+});
+
+export const signIn = (payload, history) => function (dispatch) {
+  dispatch(signInRequest);
+  axios({
+    method: 'post',
+    url: '/signin',
+    data: payload,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('USER-TOKEN')}`,
     },
-  };
-};
-const signInFailure = (error) => {
-  return {
-    type: SIGN_IN_FAILURE,
-    payload: error,
-  };
-};
-
-export const signIn = (payload, history) => {
-  return function (dispatch) {
-    dispatch(signInRequest);
-    axios({
-      method: 'post',
-      url: '/signin',
-      data: payload,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('USER-TOKEN')}`,
-      },
+  })
+    .then((response) => {
+      const { token } = response.data;
+      localStorage.setItem('USER-TOKEN', token);
+      dispatch(signInSuccess(token));
+      history.push('/home');
     })
-      .then((response) => {
-        const { token } = response.data;
-        localStorage.setItem('USER-TOKEN', token);
-        dispatch(signInSuccess(token));
-        history.push('/home');
-      })
-      .catch((error) => {
-        dispatch(signInFailure(error));
-      });
-  };
+    .catch((error) => {
+      dispatch(signInFailure(error));
+    });
 };
 
-//sign out action creators
+// sign out action creators
 export const signOutRequest = function () {
   return {
     type: SIGN_OUT_REQUEST,

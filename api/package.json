@@ -7,8 +7,8 @@
     "start": "node app.js",
     "server": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "cd client && yarn start",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "client": "cd ../client && yarn start",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix ../client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
@@ -25,5 +25,10 @@
     "mongoose": "^5.10.5",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.10.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1"
   }
 }
