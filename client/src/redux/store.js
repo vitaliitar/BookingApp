@@ -1,5 +1,5 @@
 import {
-  applyMiddleware, createStore, compose, combineReducers,
+  applyMiddleware, combineReducers, compose, createStore,
 } from 'redux';
 import thunk from 'redux-thunk';
 
@@ -9,17 +9,7 @@ const createRootReducer = () => combineReducers({
   authentication,
 });
 
-const initState = {
-  authentication: {
-    currentUser: null,
-    token: '',
-    error: '',
-    loading: false,
-    isAuthenticated: false,
-  },
-};
-
-export default function makeStore(initialState = initState) {
+export default function makeStore(initialState = {}) {
   let composeEnhancers = compose;
   const middlewares = [thunk];
 
@@ -28,18 +18,9 @@ export default function makeStore(initialState = initState) {
       composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
     }
   }
-  const store = createStore(
+  return createStore(
     createRootReducer(),
     initialState,
     composeEnhancers(applyMiddleware(...middlewares)),
   );
-
-  if (module.hot) {
-    module.hot.accept('./reducers/auth', () => {
-      /* eslint-disable global-require */
-      const nextReducer = require('./reducers/auth').default;
-      store.replaceReducer(nextReducer);
-    });
-  }
-  return store;
 }

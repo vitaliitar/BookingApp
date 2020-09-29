@@ -4,12 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { signOut } from '../../redux/action-creators/auth';
 import styles from './Navbar.module.scss';
+import {
+  faSmile, faCar, faHome, faUser, faChartLine
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { currentUser } = useSelector((state) => state.authentication);
-  const [activeServices, setActiveServices] = useState(false);
 
   const handleSignOut = () => {
     dispatch(signOut(history));
@@ -26,38 +29,50 @@ const Navbar = () => {
         {currentUser !== null ? (
           <>
             <li className={styles.parent} onClick={handleSignOut}>
-              <Link className={styles.link} to="/">Sign out</Link>
+              <Link className={styles.link} to="/">
+                Sign out
+              </Link>
             </li>
             {/* TODO active class add state management */}
-            <li
-              className={styles.parent}
-						// className={[styles.parent, styles[(activeServices === true ? 'active': '')]]}
-              id={styles.services}
-            >
-              <a className={styles.link} href="#">
-                <i className={[styles.fas, styles.faMinus].join('')} />
-                Services
-                <i className={[styles.fas, styles.faPlus].join('')} />
-              </a>
-
-              <ul className={styles.subnavigation}>
-                <li><a className={styles.link} href="#">Technology</a></li>
-                <li><a className={styles.link} href="#">Houses</a></li>
-                <li><a className={styles.link} href="#">Cars</a></li>
-              </ul>
+            <FontAwesomeIcon icon={faSmile} />
+            <li className={styles.parent}>
+              <Link className={styles.link} to='/'>
+                Experience
+              </Link>
             </li>
+            <FontAwesomeIcon icon={faHome} />
+            <li className={styles.parent}>
+              <Link className={styles.link} to={'#'}>
+                Stays
+              </Link>
+            </li>
+            <FontAwesomeIcon icon={faCar} />
+            <li className={styles.parent}>
+              <Link className={styles.link} to={'#'}>
+                Car Rentals
+              </Link>
+            </li>
+            {/*TODO user profile icons here*/}
+            {/*<div className={styles.profileWrapper}>*/}
+              <FontAwesomeIcon icon={faUser} />
+
+            {/*</div>*/}
+
           </>
         ) : (
           <>
             <li className={styles.parent}>
-              <Link className={styles.link} to="/">Sign in</Link>
+              <Link className={styles.link} to="/">
+                Sign in
+              </Link>
             </li>
             <li className={styles.parent}>
-              <Link className={styles.link} to="/signup">SignUp</Link>
+              <Link className={styles.link} to="/signup">
+                SignUp
+              </Link>
             </li>
           </>
         )}
-
       </ul>
     </nav>
   );
