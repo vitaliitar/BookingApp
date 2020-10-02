@@ -8,6 +8,7 @@ import SignUp from './pages/Signup/Signup';
 import Home from './pages/Home/Home';
 import { PrivateRoute } from './components/PrivateRoute';
 import Stylesheet from './pages/Stylesheet/Stylesheet';
+import Main from "./pages/Main/Main";
 
 const App = () => (
   <Router>
@@ -19,8 +20,11 @@ const App = () => (
       <Route path="/stylesheet" exact>
         <Stylesheet />
       </Route>
-      <Route path="/" exact>
+      <Route path="/signin" exact>
         <SignIn />
+      </Route>
+      <Route>
+        <Main/>
       </Route>
       <PrivateRoute path="/home">
         <Home />
