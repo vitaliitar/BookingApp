@@ -8,11 +8,13 @@ import {
   faSmile, faCar, faHome, faUser, faChartLine
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Burger from "../Burger/Burger";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { currentUser } = useSelector((state) => state.authentication);
+  const [ burgerState, setBurgerState ] = useState(false);
 
   const handleSignOut = () => {
     dispatch(signOut(history));
@@ -53,11 +55,10 @@ const Navbar = () => {
               </Link>
             </li>
             {/*TODO user profile icons here*/}
-            {/*<div className={styles.profileWrapper}>*/}
-              <FontAwesomeIcon icon={faUser} />
-
-            {/*</div>*/}
-
+              <Burger
+                burgerState={burgerState}
+                setBurgerState={setBurgerState}
+              />
           </>
         ) : (
           <>
