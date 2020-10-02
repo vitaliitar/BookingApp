@@ -43,3 +43,15 @@ $color: #ef6c57;
     }
   }
 }
+
+@media only screen and (max-width: 1000px) {
+  .image-carousel {
+    height: 35em;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .image-carousel {
+    height: 50em;
+  }
+}
+

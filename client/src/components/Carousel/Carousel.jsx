@@ -14,10 +14,9 @@ const Carousell = () => {
       <Carousel activeIndex={index} onSelect={handleSelect}>
         <Carousel.Item>
           <img
-            className="d-block w-100"
+            className="d-block w-100 image-carousel"
             src={'assets/images/hero_bg_2.jpg'}
             alt="First slide"
-            style={{ height: '35em' }}
           />
           <Carousel.Caption>
             <h1>Never stop exploring</h1>
@@ -26,10 +25,9 @@ const Carousell = () => {
         </Carousel.Item>
         <Carousel.Item>
           <img
-            className="d-block w-100"
+            className="d-block w-100 image-carousel"
             src={'assets/images/hero_bg_1.jpg'}
             alt="Second slide"
-            style={{ height: '35em' }}
           />
 
           <Carousel.Caption>
@@ -45,10 +43,9 @@ const Carousell = () => {
         </Carousel.Item>
         <Carousel.Item>
           <img
-            className="d-block w-100"
+            className="d-block w-100 image-carousel"
             src={'assets/images/hero_bg_3.jpg'}
             alt="Third slide"
-            style={{ height: '35em' }}
           />
 
           <Carousel.Caption>
