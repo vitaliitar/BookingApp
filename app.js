@@ -34,6 +34,7 @@ app.use(
 app.use(express.json());
 app.use('/', authRouter);
 app.use('/', apartmentRouter);
+app.use('/upload', express.static('upload'));
 
 // Serve static assets if in production
 

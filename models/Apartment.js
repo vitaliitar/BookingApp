@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 const apartmentSchema = new Schema({
   name: {
@@ -25,8 +25,11 @@ const apartmentSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  images: {
+    type: Array
+  },
   ownerId: {
-    type: Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'User',
   },
 });

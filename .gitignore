@@ -4,3 +4,6 @@
 .env
 yarn.lock
 package-lock.json
+
+uploads/*
+!uploads/.gitkeep

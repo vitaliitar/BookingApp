@@ -1,4 +1,5 @@
 const ApartmentServices = require('../services/apartment');
+const { formatPath } = require('../services/image');
 
 module.exports = {
   getAllApartments: async (req, res) => {
@@ -10,8 +11,11 @@ module.exports = {
   },
   createApartment: async (req, res) => {
     try {
-      const newApartment = req.body;
-      const savedApartment = await ApartmentServices.createApartment(newApartment);
+      const { files, body, hostname, protocol } = req;
+      const savedApartment = await ApartmentServices.createApartment(
+        body,
+        formatPath(protocol, hostname, files),
+      );
 
       res.status(201).json({
         data: savedApartment,

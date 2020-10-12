@@ -3,13 +3,15 @@ const User = require('../models/User');
 
 module.exports = {
   getAllApartments: async () => Apartment.find({}),
-  createApartment: async (payload) => {
+  createApartment: async (payload, files) => {
     const { ownerId } = payload;
     User.findById(ownerId, (err) => {
       if (err) {
         throw new Error(err.message);
       }
     });
+
+    payload.images = files;
 
     const apartment = new Apartment(payload);
 
